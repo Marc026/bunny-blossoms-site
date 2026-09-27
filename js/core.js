@@ -3,6 +3,7 @@ const HER='Chloe', HIM='Marc';
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ================= helpers ================= */
+const isDark = () => document.body.classList.contains('dark') || document.documentElement.dataset.theme === 'dark';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const rnd=(a,b)=>Math.random()*(b-a)+a, pick=a=>a[Math.floor(Math.random()*a.length)];
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));

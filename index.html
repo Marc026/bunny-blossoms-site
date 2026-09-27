@@ -634,21 +634,24 @@
 
 <div class="toast" id="toast"></div>
 
+<!-- 1. Core Utilities always first -->
 <script src="js/core.js"></script>
+
+<!-- 2. State Sync and Global Bases next -->
 <script src="js/sync.js"></script>
-<script src="js/home.js"></script>
-<script src="js/notes.js"></script>
-<script src="js/wheels.js"></script>
-<script src="js/dressup.js"></script>
-<script src="js/games.js"></script>
-<script src="js/fidget.js"></script>
-<script src="js/garden.js"></script>
+<script src="js/home.js"></script> <!-- Instantiates global 'stats' object -->
+
+<!-- 3. Dependent Feature Modules last -->
 <script src="js/pet.js"></script>
+<script src="js/fidget.js"></script>
+<script src="js/games.js"></script>
+<script src="js/dressup.js"></script>
 <script src="js/photobooth.js"></script>
-<script src="js/settings.js"></script>
-<script src="js/about.js"></script>
-<script src="js/achievements.js"></script>
+<script src="js/wheels.js"></script>
 <script src="js/trivia.js"></script>
+<script src="js/about.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/achievements.js"></script>
 <script src="js/eastereggs.js"></script>
 </body>
 </html>
