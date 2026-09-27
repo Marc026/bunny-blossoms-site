@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bunny &amp; Blossoms · for Chloe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#F58AB4">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='40' fill='%23FFE9F1'/%3E%3Cellipse cx='74' cy='55' rx='16' ry='40' fill='%23fff' stroke='%23D98CAF' stroke-width='5'/%3E%3Cellipse cx='126' cy='55' rx='16' ry='40' fill='%23fff' stroke='%23D98CAF' stroke-width='5'/%3E%3Ccircle cx='100' cy='120' r='58' fill='%23fff' stroke='%23D98CAF' stroke-width='5'/%3E%3Ccircle cx='83' cy='112' r='9' fill='%233B2A33'/%3E%3Ccircle cx='117' cy='112' r='9' fill='%233B2A33'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="petals" aria-hidden="true"></canvas>
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo" id="logo"></div>
+    <div>
+      <h1 class="title">Bunny &amp; <span>Blossoms</span></h1>
+      <p class="sub">Chloe's corner of the internet 🌸 built by Marc</p>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="settBtn" title="Settings">⚙️</button>
+      <button class="icon-btn" id="soundBtn" title="Sound on/off">🔔</button>
+      <button class="icon-btn" id="themeBtn" title="Light / dark">🌙</button>
+    </div>
+  </header>
+
+  <div class="dedication">
+    <span>🌸 This website belongs to <b>Chloe</b> — made with far too much affection by <b>Marc</b> 🐰</span>
+  </div>
+
+  <div class="tabsWrap">
+    <button class="tabArrow left hide" id="tabPrev" aria-label="scroll tabs left">‹</button>
+    <nav class="tabs" id="tabs">
+      <button class="tab on" data-p="home">🌸 Home</button>
+      <button class="tab" data-p="games">🎮 Games</button>
+      <button class="tab" data-p="fidget">🫧 Fidget</button>
+      <button class="tab" data-p="booth">📸 Photobooth</button>
+      <button class="tab" data-p="dress">🎀 Dress Up</button>
+      <button class="tab" data-p="garden">🌱 Garden</button>
+      <button class="tab" data-p="pet">🐾 Bunny Pet</button>
+      <button class="tab" data-p="wheels">🎡 Wheels</button>
+      <button class="tab" data-p="about">💕 About Us</button>
+      <button class="tab" data-p="achieve">🏆 Achievements</button>
+      <button class="tab" data-p="trivia">❓ Trivia</button>
+      <button class="tab" data-p="notes">💌 Sweet Nothings</button>
+    </nav>
+    <button class="tabArrow right pulse" id="tabNext" aria-label="scroll tabs right">›</button>
+  </div>
+
+  <!-- ============ HOME ============ -->
+  <section class="page on" id="p-home">
+    <div class="card hero">
+      <div class="big-bunny" id="heroBunny" title="pet me"></div>
+      <div>
+        <h2 id="greet">Hi Chloe 🌸</h2>
+        <p class="hint" id="heroLine">This bunny has been waiting all day for you to show up.</p>
+        <div class="row">
+          <button class="btn" id="surpriseBtn">Surprise me ✨</button>
+          <button class="btn ghost" id="petHeroBtn">Pet the bunny 🐰</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <h2>Today's note 📅</h2>
+        <p class="hint">One note, chosen just for today. A new one shows up tomorrow.</p>
+        <div data-daily>…</div>
+        <p class="sig center">— Marc 💕</p>
+      </div>
+      <div class="card">
+        <h2>Hug Delivery 🤗</h2>
+        <p class="hint">Press and hold the button until the bar fills. Don't let go early — the hug won't count.</p>
+        <button class="btn" id="hugBtn" style="width:100%">Hold for a hug 🤗</button>
+        <div class="hugbar"><i id="hugFill"></i></div>
+        <p class="boop-say" id="hugSay" style="margin-top:10px">&nbsp;</p>
+        <p class="tiny center">hugs delivered: <b id="hugCount">0</b></p>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:18px">
+      <div class="stat"><b id="sStreak">1</b><small>day streak 🔥</small></div>
+      <div class="stat"><b id="sPets">0</b><small>bunny pets</small></div>
+      <div class="stat"><b id="sPops">0</b><small>bubbles popped</small></div>
+      <div class="stat"><b id="sBoops">0</b><small>snoot boops</small></div>
+      <div class="stat"><b id="sPetals">0</b><small>petals grown</small></div>
+      <div class="stat"><b id="sVisits">1</b><small>visits</small></div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h2>What's in here</h2>
+      <div class="grid g2">
+        <div class="stat" style="text-align:left"><b style="font-size:17px">🎮 Games</b><small>Runaway bunny, memory match, falling hearts, rock-paper-scissors, Bunny Says, carrot whack, and Bunny Hop.</small></div>
+        <div class="stat" style="text-align:left"><b style="font-size:17px">🫧 Fidget</b><small>Infinite bubble wrap, boopable snoot, spinner, switches, zen sand garden.</small></div>
+        <div class="stat" style="text-align:left"><b style="font-size:17px">📸 Photobooth</b><small>Four shots, cute filters and stickers, then a downloadable slip.</small></div>
+        <div class="stat" style="text-align:left"><b style="font-size:17px">🎀 Dress Up</b><small>Pick the bunny's bow colour and accessory — it changes every bunny on the site.</small></div>
+        <div class="stat" style="text-align:left"><b style="font-size:17px">🐾 Bunny Pet</b><small>A bunny that gets hungry while you're away. Feed it. It's counting on you.</small></div>
+        <div class="stat" style="text-align:left"><b style="font-size:17px">🎡 Wheels</b><small>Can't decide where to eat or what to do? Let physics handle it.</small></div>
+      </div>
+      <p class="tiny" style="margin-top:14px">psst — try typing <b>bunny</b>, <b>love</b>, <b>cake</b> or <b>marc</b> anywhere on the page.</p>
+    </div>
+  </section>
+
+  <!-- ============ GAMES ============ -->
+  <section class="page" id="p-games">
+    <div class="card">
+      <h2>Catch the Bunny 🐰💨</h2>
+      <p class="hint">Chase it with your cursor. It hops away — quick, but catchable if you corner it.</p>
+      <div class="row" style="margin-bottom:12px">
+        <span class="pill">⏱ <b id="cTime">40</b>s</span><span class="pill">🏆 caught: <b id="cScore">0</b></span>
+        <span class="pill">⭐ best: <b id="cBest">0</b></span><button class="btn" id="cStart">Start chase</button>
+      </div>
+      <div id="arena">
+        <div id="runner"></div>
+        <div class="arena-msg" id="cMsg">
+          <div style="font-size:22px" class="display">Ready, Chloe?</div>
+          <div class="tiny">Press “Start chase”, then click the bunny as many times as you can in 40 seconds.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h2>Bunny Hop 🐰🥕</h2>
+      <p class="hint">Tap the field or press space to hop over the carrots and stones. It speeds up very gradually.</p>
+      <div class="row" style="margin-bottom:12px">
+        <span class="pill">score: <b id="rScore">0</b></span>
+        <span class="pill">⭐ best: <b id="rBest">0</b></span>
+        <button class="btn" id="rStart">Start hopping</button>
+      </div>
+      <div id="hopField">
+        <div id="hopBun"></div>
+        <div class="arena-msg" id="rMsg">
+          <div style="font-size:22px" class="display">Hop hop 🐰</div>
+          <div class="tiny">Space bar or tap to jump. That's the whole control scheme.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <h2>Memory Match 🌸</h2>
+        <p class="hint">Six pairs of cute things. Find them all.</p>
+        <div class="row" style="margin-bottom:12px">
+          <span class="pill">moves: <b id="mMoves">0</b></span><span class="pill">pairs: <b id="mPairs">0</b>/6</span>
+          <button class="btn ghost" id="mNew">New game</button>
+        </div>
+        <div id="memBoard"></div>
+        <p class="boop-say" id="mSay" style="margin-top:12px"></p>
+      </div>
+      <div class="card">
+        <h2>Rock, Paper, Scissors 🪨</h2>
+        <p class="hint">Against a bunny with an unearned amount of confidence.</p>
+        <div class="rps-out"><span id="rpsYou">❔</span><span class="vs">CHLOE vs BUN</span><span id="rpsBun">❔</span></div>
+        <p class="boop-say" id="rpsSay">Pick your weapon.</p>
+        <div class="rps-btns" style="margin-top:6px">
+          <button class="rps" data-m="0">🪨</button><button class="rps" data-m="1">📄</button><button class="rps" data-m="2">✂️</button>
+        </div>
+        <div class="row" style="margin-top:14px">
+          <span class="pill">you: <b id="rpsW">0</b></span><span class="pill">bun: <b id="rpsL">0</b></span><span class="pill">ties: <b id="rpsT">0</b></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h2>Falling Hearts 💖</h2>
+      <p class="hint">Move the basket with your mouse or finger. Catch the sweet things. Avoid the bees.</p>
+      <div class="row" style="margin-bottom:12px">
+        <span class="pill">💖 <b id="hScore">0</b></span><span class="pill">❤️ lives: <b id="hLives">3</b></span>
+        <span class="pill">⭐ best: <b id="hBest">0</b></span><button class="btn" id="hStart">Start</button>
+      </div>
+      <div id="catchArena">
+        <div id="basket">🧺</div>
+        <div class="arena-msg" id="hMsg">
+          <div style="font-size:22px" class="display">Basket ready 🧺</div>
+          <div class="tiny">Hearts, petals and strawberries are good. Bees are betrayal.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <h2>Bunny Says 🎵</h2>
+        <p class="hint">Watch the pattern, then repeat it. It grows by one each round.</p>
+        <div class="row" style="margin-bottom:12px">
+          <span class="pill">round: <b id="siLvl">0</b></span><span class="pill">⭐ best: <b id="siBest">0</b></span>
+          <button class="btn" id="siStart">Start</button>
+        </div>
+        <div id="simon">
+          <button class="pad" data-k="0">🌸</button><button class="pad" data-k="1">🍀</button>
+          <button class="pad" data-k="2">🍋</button><button class="pad" data-k="3">🫐</button>
+        </div>
+        <p class="boop-say" id="siSay" style="margin-top:12px">&nbsp;</p>
+      </div>
+      <div class="card">
+        <h2>Carrot Whack 🥕</h2>
+        <p class="hint">Carrots pop up. Tap them. Don't tap the sleeping bunny — that's rude (and -1).</p>
+        <div class="row" style="margin-bottom:12px">
+          <span class="pill">🥕 <b id="wScore">0</b></span><span class="pill">⏱ <b id="wTime">30</b>s</span>
+          <span class="pill">⭐ best: <b id="wBest">0</b></span><button class="btn" id="wStart">Start</button>
+        </div>
+        <div id="holes"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h2>Flappy Bunny 🐰🌸</h2>
+      <p class="hint">Tap or press space to flap. Thread the gaps between the blossom pipes.</p>
+      <div class="row" style="margin-bottom:12px">
+        <span class="pill">score: <b id="flapScore">0</b></span>
+        <span class="pill">⭐ best: <b id="flapBest">0</b></span>
+        <button class="btn" id="flapStart">Start flying</button>
+      </div>
+      <div id="flapField">
+        <div id="flapBun"></div>
+        <div class="arena-msg" id="flapMsg">
+          <div style="font-size:22px" class="display">Ready to fly? 🌸</div>
+          <div class="tiny">Tap anywhere or press space to flap.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <h2>Bunny Jigsaw 🧩</h2>
+        <p class="hint">Tap two pieces to swap them. Uses a built-in scene, or your latest Photobooth shot if you've taken one.</p>
+        <div class="row" style="margin-bottom:10px">
+          <button class="btn ghost" id="jigShuffle">Shuffle</button>
+          <button class="btn ghost" id="jigUsePhoto" style="display:none">Use my Photobooth shot</button>
+        </div>
+        <div id="jigWrap"></div>
+        <p class="boop-say" id="jigSay" style="margin-top:10px">&nbsp;</p>
+      </div>
+      <div class="card">
+        <h2>Tic-Tac-Toe vs Bunny ❌⭕</h2>
+        <p class="hint">You're X. The bunny plays fair — mostly.</p>
+        <div id="tttGrid"></div>
+        <p class="boop-say" id="tttSay" style="margin-top:12px">Your move.</p>
+        <div class="row" style="justify-content:center; margin-top:6px">
+          <button class="btn ghost" id="tttReset">New game</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <h2>Coloring Book 🎨</h2>
+        <p class="hint">Pick a color, then tap a shape to fill it.</p>
+        <div class="paletteRow" id="colorPalette"></div>
+        <svg id="colorSVG" viewBox="0 0 200 200" style="width:100%; max-width:260px; display:block; margin-inline:auto"></svg>
+        <div class="row" style="justify-content:center; margin-top:10px">
+          <button class="btn ghost" id="colorReset">Clear colors</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Petal Words 🌷</h2>
+        <p class="hint">Wordle, but cuter. Five letters, six guesses.</p>
+        <div id="wdGrid"></div>
+        <div id="wdKeys"></div>
+        <p class="boop-say" id="wdSay" style="margin-top:10px">&nbsp;</p>
+        <div class="row" style="justify-content:center; margin-top:8px">
+          <button class="btn ghost" id="wdNew">New word</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FIDGET ============ -->
+  <section class="page" id="p-fidget">
+    <div class="card">
+      <h2>Infinite Bubble Wrap 🫧</h2>
+      <p class="hint">Popped: <b id="popCount">0</b> — hold the mouse down and drag to zipper a whole row.</p>
+      <div id="wrap-sheet"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn ghost" id="newSheet">Fresh sheet</button>
+        <button class="btn ghost" id="popAll">Pop everything (chaos)</button>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card boop-stage">
+        <h2>Boop the Snoot 👆</h2>
+        <p class="hint center">Click the nose. That's it. That's the game.</p>
+        <div id="boopBunny"></div>
+        <div class="row" style="justify-content:center">
+          <span class="pill">boops: <b id="boopCount">0</b></span><span class="pill">combo: <b id="boopCombo">0</b></span>
+        </div>
+        <p class="boop-say" id="boopSay">&nbsp;</p>
+      </div>
+      <div class="card">
+        <h2>Spinner &amp; Switches 🎡</h2>
+        <p class="hint">Drag the flower to spin it. Flip the switches for no reason at all.</p>
+        <div class="spin-stage"><div id="spinner"></div><span class="pill">spins: <b id="spinCount">0</b></span></div>
+        <div class="switch-row" style="margin-top:18px; justify-content:center">
+          <div class="sw" data-sw><i></i></div><div class="sw" data-sw><i></i></div>
+          <div class="sw" data-sw><i></i></div><div class="sw" data-sw><i></i></div>
+        </div>
+        <p class="boop-say" id="swSay" style="margin-top:10px">&nbsp;</p>
+        <div style="margin-top:14px">
+          <label class="tiny" for="sl">a slider that goes shhhhhk</label>
+          <input id="sl" type="range" min="0" max="100" value="50">
+          <p class="tiny center" id="slSay">50</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h2>Zen Sand Garden 🧘</h2>
+      <p class="hint">Drag to rake the sand. Drop stones or scatter petals. Extremely calming, allegedly.</p>
+      <canvas id="zen"></canvas>
+      <div class="row" style="margin-top:12px">
+        <button class="btn ghost" id="zStone">Drop a stone 🪨</button>
+        <button class="btn ghost" id="zPetal">Scatter petals 🌸</button>
+        <button class="btn ghost" id="zClear">Smooth the sand</button>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <h2>Snow Globe 🌨️</h2>
+        <p class="hint center">Drag to shake. Petals settle when you let go.</p>
+        <div id="globeWrap"><canvas id="globeCanvas"></canvas></div>
+        <div class="globeBase"></div>
+      </div>
+      <div class="card">
+        <h2>Bubble Tea Maker 🧋</h2>
+        <p class="hint center">Build a cup, one layer at a time.</p>
+        <div id="bteaWrap">
+          <svg id="cupSVG" viewBox="0 0 120 160"></svg>
+          <div class="teaBtns">
+            <button class="btn ghost" id="teaBoba">+ Boba</button>
+            <button class="btn ghost" id="teaMilk">+ Milk</button>
+            <button class="btn ghost" id="teaTea">+ Tea</button>
+            <button class="btn ghost" id="teaShake">Shake 🌀</button>
+            <button class="btn ghost" id="teaReset">New cup</button>
+          </div>
+          <p class="tiny" id="teaCount">cups made: 0</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <h2>Paint Splatter 🎨</h2>
+        <p class="hint">Tap or drag to splash pastel paint. Save it if it turns into something good.</p>
+        <canvas id="paintCanvas"></canvas>
+        <div class="row" style="margin-top:12px">
+          <button class="btn ghost" id="paintClear">Clear canvas</button>
+          <button class="btn ghost" id="paintSave">Save as image 💾</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Soundboard 🔊</h2>
+        <p class="hint">A little grid of noises for absolutely no reason.</p>
+        <div class="sbGrid" id="sbGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PHOTOBOOTH ============ -->
+  <section class="page" id="p-booth">
+    <div class="card">
+      <h2>Photobooth 📸</h2>
+      <p class="hint">Take four shots, pick your favourites, and get a proper photobooth slip you can download.</p>
+      <div class="booth">
+        <div>
+          <div class="stage">
+            <video id="cam" autoplay playsinline muted></video>
+            <div id="countdown">3</div><div id="flash"></div>
+            <div class="overlay" id="camOff">
+              <div style="font-size:40px">📷</div>
+              <div class="display" style="font-size:19px">Camera is off</div>
+              <div class="tiny" id="camNote">Turn it on to start snapping — nothing ever leaves your device.</div>
+              <div class="row" style="justify-content:center">
+                <button class="btn" id="camBtn">Turn on camera</button>
+                <label class="btn ghost" for="fileIn" style="display:inline-block">Use photos instead</label>
+              </div>
+            </div>
+          </div>
+          <input id="fileIn" type="file" accept="image/*" multiple style="display:none">
+          <p class="tiny" style="margin:14px 0 4px">Filter</p><div class="chips" id="filters"></div>
+          <p class="tiny" style="margin:6px 0 4px">Sticker</p><div class="chips" id="stickers"></div>
+          <div class="row">
+            <button class="btn" id="snapStrip">Take 4 shots 📸</button>
+            <button class="btn ghost" id="snapOne">Snap one</button>
+            <button class="btn ghost" id="camStop">Camera off</button>
+          </div>
+        </div>
+        <div>
+          <p class="tiny">Your shots (tap to include on the slip, tap again to remove)</p>
+          <div id="shots"></div>
+          <p class="tiny" id="shotNote" style="margin-top:8px">No shots yet 🌸</p>
+          <p class="tiny" style="margin:14px 0 4px">Slip colour</p><div class="chips" id="slipStyles"></div>
+          <div class="row">
+            <button class="btn" id="buildStrip">Build the slip 🎞️</button>
+            <button class="btn ghost" id="dlStrip" disabled>Download 💾</button>
+          </div>
+          <div id="stripBox"><img id="stripImg" alt="photobooth slip"><p class="tiny" id="stripNote"></p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DRESS UP ============ -->
+  <section class="page" id="p-dress">
+    <div class="card">
+      <h2>Dress Up the Bunny 🎀</h2>
+      <p class="hint">Whatever you pick here shows up on every bunny across the whole site, and it's remembered.</p>
+      <div class="dress">
+        <div><div id="dressBunny"></div><p class="boop-say" id="dressSay">&nbsp;</p></div>
+        <div>
+          <p class="tiny" style="margin:0 0 6px">Bow colour</p>
+          <div class="swatches" id="bows"></div>
+          <p class="tiny" style="margin:16px 0 6px">Accessory</p>
+          <div class="chips" id="accs"></div>
+          <p class="tiny" style="margin:16px 0 6px">Cheeks</p>
+          <div class="chips" id="blushes"></div>
+          <div class="row" style="margin-top:16px">
+            <button class="btn" id="randomFit">Random outfit 🎲</button>
+            <button class="btn ghost" id="resetFit">Back to classic</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GARDEN ============ -->
+  <section class="page" id="p-garden">
+    <div class="card">
+      <h2>Petal Garden 🌱</h2>
+      <p class="hint">Click the tree to shake petals loose. Spend petals on helpers. Helpers keep working while you're gone.</p>
+      <div class="garden">
+        <div class="center">
+          <div id="tree"></div>
+          <div class="row" style="justify-content:center; margin-top:12px">
+            <span class="pill">🌸 <b id="gPetals">0</b></span><span class="pill">per click: <b id="gClick">1</b></span>
+            <span class="pill">per second: <b id="gPS">0</b></span>
+          </div>
+          <p class="tiny" id="gSay" style="margin-top:10px">the tree is full of petals and mild anticipation</p>
+        </div>
+        <div class="shop" id="shop"></div>
+      </div>
+      <div class="row" style="margin-top:16px"><button class="btn ghost" id="gReset">Start the garden over</button></div>
+    </div>
+  </section>
+
+  <!-- ============ PET ============ -->
+  <section class="page" id="p-pet">
+    <div class="card">
+      <h2>Chloe's Bunny 🐾</h2>
+      <p class="hint">It lives here. It gets hungry and lonely while you're away, so come back sometimes.</p>
+      <div class="pet-wrap">
+        <div class="center">
+          <div id="petBunny"></div>
+          <div class="row" style="justify-content:center; margin-top:10px">
+            <input id="petName" placeholder="name your bunny" maxlength="14"
+              style="font-family:inherit;font-weight:700;font-size:15px;color:var(--ink);background:var(--card-2);border:2px solid var(--line);border-radius:12px;padding:8px 12px;outline:none">
+          </div>
+          <p class="boop-say" id="petSay" style="margin-top:10px">&nbsp;</p>
+        </div>
+        <div>
+          <div class="meter f-hun"><div class="lbl"><span>🥕 Fed</span><span id="vHun">–</span></div><div class="bar"><i id="bHun"></i></div></div>
+          <div class="meter f-hap"><div class="lbl"><span>💖 Happy</span><span id="vHap">–</span></div><div class="bar"><i id="bHap"></i></div></div>
+          <div class="meter f-ene"><div class="lbl"><span>⚡ Energy</span><span id="vEne">–</span></div><div class="bar"><i id="bEne"></i></div></div>
+          <div class="row" style="margin-top:14px">
+            <button class="btn" id="feedBtn">Feed a carrot 🥕</button>
+            <button class="btn ghost" id="playBtn">Play 🎈</button>
+            <button class="btn ghost" id="napBtn">Nap 😴</button>
+            <button class="btn ghost" id="cuddleBtn">Cuddle 🤗</button>
+          </div>
+          <p class="tiny" id="petAge" style="margin-top:12px"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHEELS ============ -->
+  <section class="page" id="p-wheels">
+    <div class="card center">
+      <h2>Where Are We Eating? 🍜</h2>
+      <p class="hint">The eternal question, finally solved by a spinning wheel. No takebacks. (Okay, one takeback.)</p>
+      <div class="wheelWrap"><div class="needle">▼</div><canvas id="wheelFood" width="580" height="580"></canvas></div>
+      <button class="btn" id="spinFood" style="margin-top:12px">Spin for food 🍽️</button>
+      <p class="boop-say" id="foodSay" style="margin-top:10px">&nbsp;</p>
+      <p class="tiny" id="foodHist"></p>
+    </div>
+
+    <div class="card center" style="margin-top:18px">
+      <h2>Date Idea Wheel 🎡</h2>
+      <p class="hint">Can't decide what to do? Let physics decide.</p>
+      <div class="wheelWrap"><div class="needle">▼</div><canvas id="wheelDate" width="580" height="580"></canvas></div>
+      <button class="btn" id="spinDate" style="margin-top:12px">Spin it 🎯</button>
+      <p class="boop-say" id="dateSay" style="margin-top:10px">&nbsp;</p>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT US ============ -->
+  <section class="page" id="p-about">
+    <div class="card">
+      <h2>Us Timeline 📖</h2>
+      <p class="hint">Add the moments worth keeping. Sorted by date automatically.</p>
+      <div id="tlList"></div>
+      <div class="miniForm">
+        <input id="tlDateIn" type="date">
+        <input id="tlTitleIn" placeholder="What happened">
+        <textarea id="tlNoteIn" class="full" placeholder="A line about it (optional)" rows="2"></textarea>
+      </div>
+      <div class="row" style="margin-top:10px"><button class="btn" id="tlAdd">Add to timeline 📌</button></div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h2>Countdown ⏳</h2>
+      <p class="hint">Anniversary, her birthday, a trip — anything worth counting down to.</p>
+      <div class="grid g3" id="cdList"></div>
+      <div class="miniForm">
+        <input id="cdLabelIn" placeholder="What's coming up">
+        <input id="cdDateIn" type="date">
+      </div>
+      <div class="row" style="margin-top:10px"><button class="btn" id="cdAdd">Add countdown ⏳</button></div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h2>Our Songs 🎧</h2>
+      <p class="hint">The soundtrack, with a note on why each one made the cut.</p>
+      <div id="songList"></div>
+      <div class="miniForm">
+        <input id="sgTitleIn" placeholder="Song title">
+        <input id="sgArtistIn" placeholder="Artist">
+        <input id="sgUrlIn" placeholder="Link (Spotify/Apple Music, optional)">
+        <input id="sgWhyIn" placeholder="Why this one">
+      </div>
+      <div class="row" style="margin-top:10px"><button class="btn" id="sgAdd">Add song 🎵</button></div>
+    </div>
+  </section>
+
+  <!-- ============ ACHIEVEMENTS ============ -->
+  <section class="page" id="p-achieve">
+    <div class="card">
+      <h2>Achievements 🏆</h2>
+      <p class="hint">Unlocked together — badges pull straight from everything you both already do on this site.</p>
+      <div class="badgeGrid" id="badgeGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ TRIVIA ============ -->
+  <section class="page" id="p-trivia">
+    <div class="card">
+      <h2>Trivia ❓</h2>
+      <p class="hint" id="triHint">Marc writes the questions, Chloe answers. Fully custom, not generic.</p>
+      <div id="triPlay"></div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="triStart">Play 🎯</button>
+        <button class="btn ghost" id="triEditToggle">Edit questions ✏️</button>
+      </div>
+      <p class="tiny" style="margin-top:10px">best score: <b id="triBest">0</b>/<span id="triTotal">0</span></p>
+      <div id="triEditor" style="display:none; margin-top:14px"></div>
+    </div>
+  </section>
+
+  <!-- ============ NOTES ============ -->
+  <section class="page" id="p-notes">
+    <div class="card">
+      <h2>The Note Jar 💌</h2>
+      <p class="hint">Pull one out whenever you want. They're all for you, Chloe.</p>
+      <div class="jar">🫙</div>
+      <div data-jar style="margin-top:14px">Tap the button and see what falls out 🌸</div>
+      <p class="sig center">— Marc 💕</p>
+      <div class="row" style="margin-top:8px; justify-content:center">
+        <button class="btn" id="noteBtn">Pull a note 💕</button>
+        <button class="btn ghost" id="fortuneBtn">Crack a fortune carrot 🥕</button>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <h2>Compliment Machine 🎰</h2>
+        <p class="hint">Scientifically calibrated. Peer reviewed by one bunny.</p>
+        <button class="btn" id="compBtn">Generate compliment</button>
+        <p id="compOut" class="display" style="font-size:19px; margin-top:14px; color:var(--rose-d)">&nbsp;</p>
+      </div>
+      <div class="card center">
+        <h2>Sweet Slots 🎰</h2>
+        <p class="hint">Three of a kind wins a note. The odds are rigged in your favour, obviously.</p>
+        <div class="reels"><div class="reel" id="r0">🌸</div><div class="reel" id="r1">🐰</div><div class="reel" id="r2">🍓</div></div>
+        <button class="btn" id="slotBtn" style="margin-top:8px">Pull the lever 🎰</button>
+        <p class="boop-say" id="slotSay" style="margin-top:10px">&nbsp;</p>
+        <p class="tiny">wins: <b id="slotWins">0</b> · spins: <b id="slotSpins">0</b></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    made with far too much affection by <b>Marc</b> 🌸🐰<br>
+    for <b>Chloe</b>, who is the reason this website is pink
+    <p class="tiny" id="syncNote" style="margin-top:6px"></p>
+  </footer>
+</div>
+
+<div class="modalBack" id="settModal">
+  <div class="modalCard">
+    <button class="icon-btn modalClose" id="settClose">✕</button>
+    <h2>Settings ⚙️</h2>
+
+    <div class="settRow">
+      <span class="tiny">Theme skin</span>
+      <div class="row" id="skinRow"></div>
+    </div>
+
+    <div class="settRow">
+      <span class="tiny">Calm mode — turns off all motion and animation</span>
+      <div class="sw" id="calmSw"><i></i></div>
+    </div>
+
+    <div class="settRow">
+      <span class="tiny">Backup your progress</span>
+      <div class="row">
+        <button class="btn ghost" id="backupBtn">Download backup 💾</button>
+        <label class="btn ghost" for="restoreIn" style="display:inline-block">Restore from file</label>
+        <input id="restoreIn" type="file" accept="application/json" style="display:none">
+      </div>
+      <p class="tiny" style="margin-top:8px">Saves the pet, garden, scores, timeline and everything else on this device to one file — handy since a self-hosted site has no account to log into.</p>
+    </div>
+
+    <div class="settRow" style="margin-bottom:0">
+      <span class="tiny">Add to your home screen</span>
+      <p class="tiny" style="margin-top:2px">On your phone, use your browser's "Add to Home Screen" (Safari: Share → Add to Home Screen. Chrome: menu → Install app). It'll open full-screen like a real app from then on.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/core.js"></script>
+<script src="js/sync.js"></script>
+<script src="js/home.js"></script>
+<script src="js/notes.js"></script>
+<script src="js/wheels.js"></script>
+<script src="js/dressup.js"></script>
+<script src="js/games.js"></script>
+<script src="js/fidget.js"></script>
+<script src="js/garden.js"></script>
+<script src="js/pet.js"></script>
+<script src="js/photobooth.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/about.js"></script>
+<script src="js/achievements.js"></script>
+<script src="js/trivia.js"></script>
+<script src="js/eastereggs.js"></script>
+</body>
+</html>

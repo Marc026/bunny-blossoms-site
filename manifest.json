@@ -1,0 +1,16 @@
+{
+  "name": "Bunny & Blossoms",
+  "short_name": "Bunny & Blossoms",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FFF6FA",
+  "theme_color": "#F58AB4",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='40' fill='%23FFE9F1'/%3E%3Cellipse cx='74' cy='55' rx='16' ry='40' fill='%23fff' stroke='%23D98CAF' stroke-width='5'/%3E%3Cellipse cx='126' cy='55' rx='16' ry='40' fill='%23fff' stroke='%23D98CAF' stroke-width='5'/%3E%3Ccircle cx='100' cy='120' r='58' fill='%23fff' stroke='%23D98CAF' stroke-width='5'/%3E%3Ccircle cx='83' cy='112' r='9' fill='%233B2A33'/%3E%3Ccircle cx='117' cy='112' r='9' fill='%233B2A33'/%3E%3C/svg%3E",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
