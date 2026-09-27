@@ -3,7 +3,6 @@ const HER='Chloe', HIM='Marc';
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ================= helpers ================= */
-const isDark = () => document.body.classList.contains('dark') || document.documentElement.dataset.theme === 'dark';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const rnd=(a,b)=>Math.random()*(b-a)+a, pick=a=>a[Math.floor(Math.random()*a.length)];
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -108,7 +107,7 @@ repaintBunnies();
   function size(){ W=cv.width=innerWidth; H=cv.height=innerHeight; }
   function make(){ ps=[]; const n=REDUCED?10:Math.round(clamp(innerWidth/26,18,46));
     for(let i=0;i<n;i++) ps.push({x:rnd(0,W),y:rnd(-H,H),s:rnd(5,12),v:rnd(.22,.8),a:rnd(0,6.28),sp:rnd(.01,.03),d:rnd(.25,.9)}); }
-  function draw(){ cx.clearRect(0,0,W,H); const dark=isDark();
+  function draw(){ cx.clearRect(0,0,W,H); const dark=(typeof isDark==='function')&&isDark();
     for(const p of ps){ p.y+=p.v; p.a+=p.sp; p.x+=Math.sin(p.a)*p.d;
       if(p.y>H+20){p.y=-20;p.x=rnd(0,W);}
       cx.save(); cx.translate(p.x,p.y); cx.rotate(p.a);
