@@ -19,16 +19,14 @@
    Leave the placeholders as-is and the site just runs local-only,
    exactly like before — nothing breaks either way.
 */
-
 const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyA4NWmhQgNdU3BedUMC3YdlExOeddnNSnk",
-  authDomain: "chlo-8ba74.firebaseapp.com",
-  databaseURL: "https://chlo-8ba74-default-rtdb.firebaseio.com",
-  projectId: "chlo-8ba74",
-  storageBucket: "chlo-8ba74.firebasestorage.app",
-  messagingSenderId: "848490841328",
-  appId: "1:848490841328:web:ac5eb3e12a6fafa6baae35",
-  measurementId: "G-DSLKRVVVMH"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT-default-rtdb.YOUR_REGION.firebasedatabase.app",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 const SYNC_ON = !!(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.databaseURL
   && !FIREBASE_CONFIG.apiKey.startsWith('YOUR_') && !FIREBASE_CONFIG.databaseURL.startsWith('https://YOUR_'));
@@ -60,37 +58,3 @@ if(SYNC_ON){
     }catch(e){ /* offline, blocked, or config not filled in yet — site stays local-only */ }
   })();
 }
-let toastT; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show');
-  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2000); }
- 
-let AC=null, muted=store.get('muted',false);
-function ac(){ if(!AC){ try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){AC=null;} } return AC; }
-function blip(f=600,dur=.09,type='sine',vol=.10,glide=null){
-  if(muted) return; const c=ac(); if(!c) return;
-  try{ const o=c.createOscillator(), g=c.createGain();
-    o.type=type; o.frequency.setValueAtTime(f,c.currentTime);
-    if(glide) o.frequency.exponentialRampToValueAtTime(Math.max(40,glide),c.currentTime+dur);
-    g.gain.setValueAtTime(vol,c.currentTime); g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);
-    o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+dur+.02);
-  }catch(e){}
-}
-const sfx={
-  pop:()=>blip(rnd(520,900),.07,'triangle',.12,180),
-  boop:()=>blip(rnd(300,420),.12,'sine',.13,760),
-  good:()=>{blip(660,.09,'triangle',.11); setTimeout(()=>blip(880,.11,'triangle',.11),80);},
-  bad:()=>blip(180,.2,'sawtooth',.08,70),
-  click:()=>blip(rnd(700,1100),.05,'square',.05),
-  shutter:()=>{blip(1400,.03,'square',.09); setTimeout(()=>blip(700,.06,'square',.07),45);},
-  win:()=>{[523,659,784,1046].forEach((f,i)=>setTimeout(()=>blip(f,.12,'triangle',.1),i*95));}
-};
-$('#soundBtn').textContent=muted?'🔕':'🔔';
-$('#soundBtn').onclick=()=>{muted=!muted; store.set('muted',muted); $('#soundBtn').textContent=muted?'🔕':'🔔'; if(!muted) sfx.good();};
- 
-const savedTheme=store.get('theme',null);
-if(savedTheme) document.documentElement.setAttribute('data-theme',savedTheme);
-function isDark(){ const t=document.documentElement.getAttribute('data-theme');
-  return t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches); }
-function syncTheme(){ $('#themeBtn').textContent=isDark()?'☀️':'🌙'; }
-syncTheme();
-$('#themeBtn').onclick=()=>{ const n=isDark()?'light':'dark';
-  document.documentElement.setAttribute('data-theme',n); store.set('theme',n); syncTheme(); sfx.click(); };

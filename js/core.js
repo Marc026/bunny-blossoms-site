@@ -12,6 +12,42 @@ const store={
     if(SYNC_ON && SHARED_KEYS.includes(k) && SYNC._push) SYNC._push(k,v); }
 };
 
+/* ================= toast, sound & theme ================= */
+let toastT; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2000); }
+
+let AC=null, muted=store.get('muted',false);
+function ac(){ if(!AC){ try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){AC=null;} } return AC; }
+function blip(f=600,dur=.09,type='sine',vol=.10,glide=null){
+  if(muted) return; const c=ac(); if(!c) return;
+  try{ const o=c.createOscillator(), g=c.createGain();
+    o.type=type; o.frequency.setValueAtTime(f,c.currentTime);
+    if(glide) o.frequency.exponentialRampToValueAtTime(Math.max(40,glide),c.currentTime+dur);
+    g.gain.setValueAtTime(vol,c.currentTime); g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);
+    o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+dur+.02);
+  }catch(e){}
+}
+const sfx={
+  pop:()=>blip(rnd(520,900),.07,'triangle',.12,180),
+  boop:()=>blip(rnd(300,420),.12,'sine',.13,760),
+  good:()=>{blip(660,.09,'triangle',.11); setTimeout(()=>blip(880,.11,'triangle',.11),80);},
+  bad:()=>blip(180,.2,'sawtooth',.08,70),
+  click:()=>blip(rnd(700,1100),.05,'square',.05),
+  shutter:()=>{blip(1400,.03,'square',.09); setTimeout(()=>blip(700,.06,'square',.07),45);},
+  win:()=>{[523,659,784,1046].forEach((f,i)=>setTimeout(()=>blip(f,.12,'triangle',.1),i*95));}
+};
+$('#soundBtn').textContent=muted?'🔕':'🔔';
+$('#soundBtn').onclick=()=>{muted=!muted; store.set('muted',muted); $('#soundBtn').textContent=muted?'🔕':'🔔'; if(!muted) sfx.good();};
+
+const savedTheme=store.get('theme',null);
+if(savedTheme) document.documentElement.setAttribute('data-theme',savedTheme);
+function isDark(){ const t=document.documentElement.getAttribute('data-theme');
+  return t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches); }
+function syncTheme(){ $('#themeBtn').textContent=isDark()?'☀️':'🌙'; }
+syncTheme();
+$('#themeBtn').onclick=()=>{ const n=isDark()?'light':'dark';
+  document.documentElement.setAttribute('data-theme',n); store.set('theme',n); syncTheme(); sfx.click(); };
+
 /* ================= bunny art + outfit ================= */
 const BOWS={rose:'#F58AB4',mint:'#79BCA8',lilac:'#B3A3D6',butter:'#E9C35F',sky:'#8FC7E8',berry:'#C4497E'};
 const ACCS=[
@@ -107,7 +143,7 @@ repaintBunnies();
   function size(){ W=cv.width=innerWidth; H=cv.height=innerHeight; }
   function make(){ ps=[]; const n=REDUCED?10:Math.round(clamp(innerWidth/26,18,46));
     for(let i=0;i<n;i++) ps.push({x:rnd(0,W),y:rnd(-H,H),s:rnd(5,12),v:rnd(.22,.8),a:rnd(0,6.28),sp:rnd(.01,.03),d:rnd(.25,.9)}); }
-  function draw(){ cx.clearRect(0,0,W,H); const dark=(typeof isDark==='function')&&isDark();
+  function draw(){ cx.clearRect(0,0,W,H); const dark=isDark();
     for(const p of ps){ p.y+=p.v; p.a+=p.sp; p.x+=Math.sin(p.a)*p.d;
       if(p.y>H+20){p.y=-20;p.x=rnd(0,W);}
       cx.save(); cx.translate(p.x,p.y); cx.rotate(p.a);
